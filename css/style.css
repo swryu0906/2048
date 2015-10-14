@@ -1,0 +1,52 @@
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.heading {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.game-control, .game-message {
+  text-align: center;
+}
+
+.grid-container {
+  /*position: absolute;
+  z-index: 1;*/
+  width: 470px;
+  margin: 30px auto;
+}
+
+.grid-row {
+  margin-bottom: 15px;
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+.grid-row:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35);
+}
+.grid-cell:last-child {
+  margin-right: 0;
+}

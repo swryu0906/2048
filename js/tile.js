@@ -1,19 +1,25 @@
 // window.onload = function() {
 //   console.log('app.js is loaded.');
-//
-//
 // };
 
-function Tile(position, value) {
-  this.x = position.x;
-  this.y = position.y;
-  // If value is not specified, the default value should be 2
-  this.value = value || 2;
+function Tile() {
+  this.x = null;
+  this.y = null;
+  // the default value should be 2 or 4
+  this.value = Math.floor(Math.random() * 2) * 2 + 2;
 }
+
+Tile.prototype.reset = function() {
+  this.x = null;
+  this.y = null;
+  this.value = Math.floor(Math.random() * 2) * 2 + 2;
+};
 
 Tile.prototype.update = function(position, value) {
   this.x = position.x;
   this.y = position.y;
+  // If the value argumenet is not provided,
+  // the previous value should be kept.
   this.value = value || this.value;
 };
 
@@ -29,7 +35,7 @@ Tile.prototype.serialize = function() {
 
 Tile.prototype.toJqueryObject = function() {
   var jqueryObject = $('<div></div>');
-  jqueryObject.addClass('grid-cell');
+  jqueryObject.addClass('tile');
   jqueryObject.text(this.value);
   var topPx = 120 * this.x;
   var leftPx = 120 * this.y;
@@ -38,13 +44,12 @@ Tile.prototype.toJqueryObject = function() {
     top: (topPx + 'px'),
     left: (leftPx + 'px')
   });
-
   return jqueryObject;
 };
 
 
-// var tile00 = new Tile({ x: 0, y: 0}, 2);
-// var tile13 = new Tile({ x: 1, y: 3}, 4);
+// var tile00 = new Tile({ x: 0, y: 0});
+// var tile13 = new Tile({ x: 1, y: 3});
 // console.log(tile00);
 // console.log(tile13.serialize());
 // var boardDiv = $('.grid-container');

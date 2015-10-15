@@ -21,14 +21,15 @@
 .grid-container {
   /*position: absolute;
   z-index: 1;*/
-  width: 460px;
+  width: 480px;
   margin: 30px auto;
+  padding: 0;
   position: relative;
 }
 
-/*.grid-row {
-  margin-bottom: 15px;
-  position: relative;
+.grid-row {
+  margin-bottom: 20px;
+  /*position: relative;*/
 }
 
 .grid-row:last-child {
@@ -39,9 +40,20 @@
   content: "";
   display: block;
   clear: both;
-}*/
+}
 
 .grid-cell {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 0;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35);
+  display: inline-block;
+}
+
+.tile {
   width: 100px;
   height: 100px;
   margin-right: 20px;
@@ -50,7 +62,10 @@
   border-radius: 3px;
   background: rgba(238, 228, 218, 0.35);
   position: absolute;
+  z-index: 2;
   /*display: inline-block;*/
+  font-size: 20px;
+  text-align: center;
 }
 
 #cell-0-0 {

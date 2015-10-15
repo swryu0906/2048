@@ -21,12 +21,14 @@
 .grid-container {
   /*position: absolute;
   z-index: 1;*/
-  width: 470px;
+  width: 460px;
   margin: 30px auto;
+  position: relative;
 }
 
-.grid-row {
+/*.grid-row {
   margin-bottom: 15px;
+  position: relative;
 }
 
 .grid-row:last-child {
@@ -37,16 +39,51 @@
   content: "";
   display: block;
   clear: both;
-}
+}*/
 
 .grid-cell {
-  width: 106.25px;
-  height: 106.25px;
-  margin-right: 15px;
-  float: left;
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  /*float: left;*/
   border-radius: 3px;
   background: rgba(238, 228, 218, 0.35);
+  position: absolute;
+  /*display: inline-block;*/
 }
-.grid-cell:last-child {
+
+#cell-0-0 {
+  top: 0px;
+  left: 0px;
+}
+
+#cell-0-1 {
+  top: 0px;
+  left: 120px;
+}
+
+
+/*.grid-cell {
+  position: relative;
+  -webkit-animation: mymove infinite; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+  animation: mymove infinite;
+  animation-duration: 2s;
+}*/
+
+/* Chrome, Safari, Opera */
+/*@-webkit-keyframes mymove {
+from {top: 0px;}
+to {top: 200px;}
+}*/
+
+/*@keyframes mymove {
+from {top: 0px;}
+to {top: 200px;}
+}*/
+
+
+/*.grid-cell:last-child {
   margin-right: 0;
-}
+}*/

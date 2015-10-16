@@ -1,0 +1,104 @@
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.heading {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.game-control, .game-message {
+  text-align: center;
+}
+
+.grid-container {
+  /*position: absolute;
+  z-index: 1;*/
+  width: 480px;
+  margin: 30px auto;
+  padding: 0;
+  position: relative;
+}
+
+.grid-row {
+  margin-bottom: 20px;
+  /*position: relative;*/
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+.grid-row:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.grid-cell {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 0;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35);
+  display: inline-block;
+}
+
+.tile {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  /*float: left;*/
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35);
+  position: absolute;
+  z-index: 2;
+  /*display: inline-block;*/
+  font-size: 20px;
+  text-align: center;
+}
+
+#cell-0-0 {
+  top: 0px;
+  left: 0px;
+}
+
+#cell-0-1 {
+  top: 0px;
+  left: 120px;
+}
+
+
+/*.grid-cell {
+  position: relative;
+  -webkit-animation: mymove infinite; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+  animation: mymove infinite;
+  animation-duration: 2s;
+}*/
+
+/* Chrome, Safari, Opera */
+/*@-webkit-keyframes mymove {
+from {top: 0px;}
+to {top: 200px;}
+}*/
+
+/*@keyframes mymove {
+from {top: 0px;}
+to {top: 200px;}
+}*/
+
+
+/*.grid-cell:last-child {
+  margin-right: 0;
+}*/

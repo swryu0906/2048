@@ -2,7 +2,8 @@
 //   console.log('app.js is loaded.');
 // };
 
-function Tile() {
+function Tile(id) {
+  this.id = id;
   this.x = null;
   this.y = null;
   // the default value should be 2 or 4
@@ -15,9 +16,9 @@ Tile.prototype.reset = function() {
   this.value = Math.floor(Math.random() * 2) * 2 + 2;
 };
 
-Tile.prototype.update = function(position, value) {
-  this.x = position.x;
-  this.y = position.y;
+Tile.prototype.update = function(pos, value) {
+  this.x = pos.x;
+  this.y = pos.y;
   // If the value argumenet is not provided,
   // the previous value should be kept.
   this.value = value || this.value;
@@ -25,7 +26,7 @@ Tile.prototype.update = function(position, value) {
 
 Tile.prototype.serialize = function() {
   return {
-    position : {
+    pos : {
       x: this.x,
       y: this.y
     },
@@ -36,11 +37,12 @@ Tile.prototype.serialize = function() {
 Tile.prototype.toJqueryObject = function() {
   var jqueryObject = $('<div></div>');
   jqueryObject.addClass('tile');
+  jqueryObject.attr('id', this.id.toString());
   jqueryObject.text(this.value);
   var topPx = 120 * this.x;
   var leftPx = 120 * this.y;
   jqueryObject.css({
-    position: 'absolute',
+    pos: 'absolute',
     top: (topPx + 'px'),
     left: (leftPx + 'px')
   });

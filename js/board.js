@@ -2,7 +2,7 @@ function Board(size) {
   this.size = size;
   this.board = [];
   this.unusedTiles = [];
-  this.aniUnitTime = 500;
+  this.aniUnitTime = 200;
 
   // board array should contain (size * size) number of
   // null elements in the initialization.
@@ -52,7 +52,9 @@ Board.prototype.insertTile = function() {
 // When a tile is moving without conbining with another
 Board.prototype.moveTile = function(oldPos, newPos) {
   var movingTile = this.board[this.parsePositionToIndex(oldPos)];
+  // console.log(movingTile);
   this.board[this.parsePositionToIndex(newPos)] = movingTile.update(newPos);
+  // console.log(movingTile);
   this.board[this.parseIndexToPosition(oldPos)] = null;
   var xDistance = newPos.x - oldPos.x;
   var yDistance = newPos.y - oldPos.y;
@@ -99,7 +101,6 @@ Board.prototype.combineTiles = function(aPos, bPos, newPos) {
   var shakeTile = function() {
     $('#' + bTile.id).remove();
     $('#' + aTile.id).text(aTile.value).effect('shake');
-
   }
 
   // When two tiles are moving vertially
@@ -133,7 +134,7 @@ Board.prototype.combineTiles = function(aPos, bPos, newPos) {
     });
     // Moves the tile from bPos
     $('#' + bTile.id).animate({
-      top: ('+=' + (120 * bYDistance) + 'px')
+      left: ('+=' + (120 * bYDistance) + 'px')
     }, (this.aniUnitTime * Math.abs(bYDistance)), function() {
 
       if(Math.abs(aYDistance) < Math.abs(bYDistance)) shakeTile();

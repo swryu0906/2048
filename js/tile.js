@@ -4,45 +4,46 @@
 
 function Tile(id) {
   this.id = id;
-  this.x = null;
-  this.y = null;
   // the default value should be 2 or 4
   this.value = Math.floor(Math.random() * 2) * 2 + 2;
+  this.x = null;
+  this.y = null;
 }
 
 Tile.prototype.reset = function() {
+  this.value = Math.floor(Math.random() * 2) * 2 + 2;
   this.x = null;
   this.y = null;
-  this.value = Math.floor(Math.random() * 2) * 2 + 2;
 };
 
 Tile.prototype.update = function(pos, value) {
-  this.x = pos.x;
-  this.y = pos.y;
   // If the value argumenet is not provided,
   // the previous value should be kept.
   this.value = value || this.value;
+  this.x = pos.x;
+  this.y = pos.y;
 };
 
 Tile.prototype.serialize = function() {
   return {
+    id: this.id,
+    value: this.value,
     pos : {
       x: this.x,
       y: this.y
-    },
-    value: this.value
+    }
   };
 };
 
 Tile.prototype.toJqueryObject = function() {
   var jqueryObject = $('<div></div>');
-  jqueryObject.addClass('tile');
   jqueryObject.attr('id', this.id.toString());
+  jqueryObject.addClass('tile');
   jqueryObject.text(this.value);
   var topPx = 120 * this.x;
   var leftPx = 120 * this.y;
   jqueryObject.css({
-    pos: 'absolute',
+    position: 'absolute',
     top: (topPx + 'px'),
     left: (leftPx + 'px')
   });
@@ -50,15 +51,21 @@ Tile.prototype.toJqueryObject = function() {
 };
 
 
-// var tile00 = new Tile({ x: 0, y: 0});
-// var tile13 = new Tile({ x: 1, y: 3});
-// console.log(tile00);
-// console.log(tile13.serialize());
+// var tile0 = new Tile(0);
+// var tile1 = new Tile(1);
+// console.log(tile0);
+// console.log(tile1);
+// console.log(tile0.serialize());
+// console.log(tile1.serialize());
 // var boardDiv = $('.grid-container');
-// var tile00Div = tile00.toJqueryObject();
-// var tile13Div = tile13.toJqueryObject();
-// boardDiv.append(tile00Div);
-// boardDiv.append(tile13Div);
+// tile0.update({ x: 3, y: 0 });
+// tile1.update({ x: 1, y: 3 }, 16);
+// console.log(tile0);
+// console.log(tile1);
+// var tile0Div = tile0.toJqueryObject();
+// var tile1Div = tile1.toJqueryObject();
+// boardDiv.append(tile0Div);
+// boardDiv.append(tile1Div);
 
 
 

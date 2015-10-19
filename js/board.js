@@ -1,61 +1,75 @@
 function Board(size) {
   this.size = size;
-  this.board = [];
+  this.grid = [];
   this.unusedTiles = [];
-  this.aniUnitTime = 200;
+  // animation unit time
+  this.aniUnitTime = 500;
 
-  // board array should contain (size * size) number of
-  // null elements in the initialization.
+  // this.grid array should contain (size * size) number of
+  // null elements after initialization.
   // unusedTiles array should contain (size * size) number of
-  // Tile instances in the initialization.
+  // Tile instances after initialization.
   for(var i = 0; i < (this.size * this.size); i++) {
-    this.board.push(null);
+    this.grid.push(null);
     this.unusedTiles.push(new Tile(i));
   }
 }
 
-Board.prototype.parseIndexToPosition = function(index) {
+Board.prototype.parseIndexToPos = function(index) {
   return {
     x: Math.floor(index / this.size),
     y: index % this.size
   };
 };
 
-Board.prototype.parsePositionToIndex = function(pos) {
+Board.prototype.parsePosToIndex = function(pos) {
   return pos.x * this.size + pos.y;
 };
 
+// getUnusedIndexes() function should return an array which
+// contains the indexes of empty cells
 Board.prototype.getUnusedIndexes = function() {
   var unusedIndexes = [];
-  for(var i = 0; i < this.board.length; i++) {
-    if(this.board[i] === null) unusedIndexes.push(i);
+  for(var i = 0; i < this.grid.length; i++) {
+    if(this.grid[i] === null) unusedIndexes.push(i);
   }
   return unusedIndexes;
 };
 
+// isFull() function should check
+// whether the board is full of tiles or not
 Board.prototype.isFull = function() {
   return (this.getUnusedIndexes().length === 0);
 };
 
+// insertTile() function should insert an reset tile
+// to one of the empty cells
 Board.prototype.insertTile = function() {
   var unusedIndexes = this.getUnusedIndexes();
   var unusedIndex = unusedIndexes[Math.floor(Math.random() * unusedIndexes.length)];
-  var newTile = this.unusedTiles.pop();
+  var newTile = this.unusedTiles.shift();
   newTile.reset();
-  newTile.update(this.parseIndexToPosition(unusedIndex));
-  this.board[unusedIndex] = newTile;
+  newTile.update(this.parseIndexToPos(unusedIndex));
+  this.grid[unusedIndex] = newTile;
 
+  // Append newTile.jqOjbect to .grid-container
   $('.grid-container').append(newTile.toJqueryObject());
-  // var newTile = self.unusedTiles.splice(randomIndex, 1);
 };
 
-// When a tile is moving without conbining with another
-Board.prototype.moveTile = function(oldPos, newPos) {
-  var movingTile = this.board[this.parsePositionToIndex(oldPos)];
+// When a tile is moving without conbining with another tile
+Board.prototype.moveTile = function(oldIndex, newIndex) {
+  var oldPos = this.parseIndexToPos(oldIndex);
+  var newPos = this.parseIndexToPos(newIndex);
+  var movingTile = this.grid[oldIndex];
   // console.log(movingTile);
-  this.board[this.parsePositionToIndex(newPos)] = movingTile.update(newPos);
+  this.grid[oldIndex] = null;
+
+  movingTile.update(newPos);
+  this.grid[newIndex] = movingTile;
+  // console.log(newPos);
   // console.log(movingTile);
-  this.board[this.parseIndexToPosition(oldPos)] = null;
+  // this.grid[newIndex] = movingTile;
+  // console.log(this.grid[newIndex]);
   var xDistance = newPos.x - oldPos.x;
   var yDistance = newPos.y - oldPos.y;
 
@@ -64,7 +78,7 @@ Board.prototype.moveTile = function(oldPos, newPos) {
     $('#' + movingTile.id).animate({
       top: ('+=' + (120 * xDistance) + 'px')
     }, (this.aniUnitTime * Math.abs(xDistance)), function() {
-      $(this).append('I\'m moved x = ' + xDistance + ', y= ' + yDistance);
+      // $(this).append('I\'m moved x = ' + xDistance + ', y= ' + yDistance);
     });
   }
   // When a tile is moving horizontally
@@ -72,20 +86,35 @@ Board.prototype.moveTile = function(oldPos, newPos) {
     $('#' + movingTile.id).animate({
       left: ('+=' + (120 * yDistance) + 'px')
     }, (this.aniUnitTime * Math.abs(yDistance)), function() {
-      $(this).append('I\'m moved x = ' + xDistance + ', y= ' + yDistance);
+      // $(this).append('I\'m moved x = ' + xDistance + ', y= ' + yDistance);
     });
   }
 };
 
 // When two tiles are moving and being combined.
-Board.prototype.combineTiles = function(aPos, bPos, newPos) {
-  var aTile = this.board[this.parsePositionToIndex(aPos)];
-  var bTile = this.board[this.parsePositionToIndex(bPos)];
+Board.prototype.combineTiles = function(aIndex, bIndex, newIndex) {
+  var aPos = this.parseIndexToPos(aIndex);
+  var bPos = this.parseIndexToPos(bIndex);
+  var newPos = this.parseIndexToPos(newIndex);
 
-  // Moves One of the two tiles to the new position
+  var aTile = this.grid[aIndex];
+  var bTile = this.grid[bIndex];
+
+  // Moves one of the two tiles to the new position
   // and doubles its value.
+  // Set the new grid index and reset the two old grid cells
+
+
+  this.grid[aIndex] = null;
+  // console.log('grid[newIndex] = ');
+  // console.log(this.grid[newIndex]);
+  this.grid[bIndex] = null;
+  // console.log('grid[newIndex] = ');
+  // console.log(this.grid[newIndex]);
   aTile.update(newPos, (aTile.value * 2));
-  this.board[this.parsePositionToIndex(newPos)] = aTile;
+  this.grid[newIndex] = aTile;
+  // console.log('grid[newIndex] = ');
+  // console.log(this.grid[newIndex]);
 
   // Reset the other tile and push it to the unusedTiles array
   bTile.reset();
@@ -142,7 +171,7 @@ Board.prototype.combineTiles = function(aPos, bPos, newPos) {
   }
 };
 
-var newBoard = new Board(4);
-$('#insert-btn').on('click', function() {
-  newBoard.insertTile();
-});
+// var b = new Board(4);
+// $('#insert-btn').on('click', function() {
+//   b.insertTile();
+// });
